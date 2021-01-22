@@ -1,0 +1,3 @@
+# 检出时候不转换CRLF，提交时转换成LF
+[core]
+	autocrlf = input

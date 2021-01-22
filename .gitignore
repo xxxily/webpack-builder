@@ -1,0 +1,22 @@
+.DS_Store
+node_modules/
+dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 禁止提交自定义配置文件
+**/config/custom.config/
+
+# Editor directories and files
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.vscode
+
+# old log Files and log modules
+log/
+report.**.json
+proj.custom.config.*
