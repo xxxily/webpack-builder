@@ -7,7 +7,7 @@ module.exports = {
    * 打开某个指定的url
    * @param url {string} -必选 完整的url地址
    */
-  openUrl(url) {
+  openUrl (url) {
     let cmd = 'start'
     const platform = process.platform
 
@@ -26,7 +26,7 @@ module.exports = {
   },
 
   /* 获取运行npm命令时候的参数 */
-  getNpmConfigArgv() {
+  getNpmConfigArgv () {
     let argv = []
     if (process.env.npm_config_argv) {
       const npmArgv = JSON.parse(process.env.npm_config_argv)
@@ -36,7 +36,7 @@ module.exports = {
   },
 
   /* 解析npm run 命令的参数 */
-  parseNpmRunOrder() {
+  parseNpmRunOrder () {
     const t = this
     const npmArgv = t.getNpmConfigArgv()
     const resule = {
@@ -44,7 +44,7 @@ module.exports = {
       args: {},
     }
 
-    function parseArgs(args) {
+    function parseArgs (args) {
       let lastArgName = null
       args.forEach((item) => {
         if (/^(-|\/)/.test(item)) {
@@ -75,7 +75,7 @@ module.exports = {
    * @param filter {String|Array} -必选，指定过滤规则
    * @returns {null|Array}
    */
-  getNpmArgItemByFilter(filter) {
+  getNpmArgItemByFilter (filter) {
     const npmOrder = this.parseNpmRunOrder()
 
     if (typeof filter === 'string') {
@@ -104,7 +104,7 @@ module.exports = {
    * 判断当前是否传了某个npm命令参数
    * @param argv {string} -必选 要判断的参数，可以不加前缀 - 或 -- ，会自动判断是否存在带 - 或 -- 的参数，例如传 fix，则会自动判断是否存在 -fix 或 --fix
    */
-  hasNpmArgv(argv) {
+  hasNpmArgv (argv) {
     const t = this
     const argvStr = argv.replace(/^-+/g, '')
     const npmArgv = t.getNpmConfigArgv()
@@ -115,7 +115,7 @@ module.exports = {
    * @param commands {string|array} -必选 可以是单个命令，也可以是多个命令
    * @param options {object} -可选 child_process.exec 所有可用参数
    */
-  cmds(commands, options) {
+  cmds (commands, options) {
     const commandList = typeof commands === 'string' ? [commands] : commands
     commandList.forEach(function (cmd) {
       childProcess.execSync(cmd, options)
@@ -128,7 +128,7 @@ module.exports = {
    * @param path {String} -必选 路径信息
    * @returns {*}
    */
-  getValByPath(obj, path) {
+  getValByPath (obj, path) {
     path = path || ''
     const pathArr = path.split('.')
     let result = obj

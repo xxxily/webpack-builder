@@ -7,7 +7,7 @@
  * @github       https://github.com/xxxily
  */
 const utils = require('../../utils/utils')
-const { program } = require('commander')
+const { program, } = require('commander')
 const npmConfig = utils.getNpmConfigArgv()
 
 program.option('-evn, --environment [env]', '指定环境变量，可选值有：dev、prod', 'prod')
@@ -59,7 +59,7 @@ const projConfig = require('../../proj.config')
 const entrys = require('./entrys')
 const helper = require('./index')
 
-async function inspect() {
+async function inspect () {
   let webpackConfig = {}
   if (helper.isDev()) {
     webpackConfig = await require('../config/dev')

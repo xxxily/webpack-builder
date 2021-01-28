@@ -11,7 +11,7 @@ const path = require('path')
 const dayjs = require('dayjs')
 
 class LogSystem {
-  constructor(setting) {
+  constructor (setting) {
     this.baseSetting = {
       /* 保存的文件地址 */
       path: path.join(process.cwd(), '/log/'),
@@ -31,7 +31,7 @@ class LogSystem {
   }
 
   /* 创建一个新实例 */
-  create(setting) {
+  create (setting) {
     return new LogSystem(setting)
   }
 
@@ -39,7 +39,7 @@ class LogSystem {
    * 相关设置项 可设置的选项请参考上面的 setting 对象
    * @param obj
    */
-  setting(obj) {
+  setting (obj) {
     const setting = this.baseSetting
     for (const key in obj) {
       if (typeof setting[key] !== 'undefined') {
@@ -48,7 +48,7 @@ class LogSystem {
     }
   }
 
-  msgFormat(msg, type) {
+  msgFormat (msg, type) {
     if (Object.prototype.toString.call(msg) === '[object Object]') {
       msg = JSON.stringify(msg, null, 2)
     }
@@ -86,7 +86,7 @@ class LogSystem {
   }
 
   /* 获取日志将记录到哪个路径下 */
-  getLogFilePath() {
+  getLogFilePath () {
     const setting = this.baseSetting
     const logDirPath = setting.path
     const logFileName =
@@ -100,7 +100,7 @@ class LogSystem {
    * @param logMsg {string} -必选 要存储的日志信息
    * @param saveNow {boolean} -可选 马上保存，不延迟，默认是延时1s后才保存，防止并非时频繁操作IO
    */
-  saveLog(logMsg, saveNow) {
+  saveLog (logMsg, saveNow) {
     const t = this
     const setting = t.baseSetting
     const logDirPath = setting.path
@@ -114,7 +114,7 @@ class LogSystem {
     /* 确保目录存在 */
     fs.mkdirsSync(logDirPath)
 
-    function writeLog(fd, callback) {
+    function writeLog (fd, callback) {
       const curLen = t._cache_.length
       fs.write(fd, t._cache_.join(''), 'utf-8', function (err, written, string) {
         callback && callback(err, written, string)
@@ -128,7 +128,7 @@ class LogSystem {
       })
     }
 
-    function gotoWrite() {
+    function gotoWrite () {
       if (t.__fd__ && t.__curFdPath__ === logFilePath) {
         writeLog(t.__fd__)
       } else {
@@ -156,7 +156,7 @@ class LogSystem {
   }
 
   /* 插入默认分割线 */
-  splitLine() {
+  splitLine () {
     const t = this
     let splitLine = '+' + '------------+'.repeat(6)
     splitLine = '\n' + splitLine + '\n'
@@ -170,7 +170,7 @@ class LogSystem {
    * @param logType {number} -可选 日志的记录方式，默认输出到控制台并保存到日志文件， -1 表示只输出到控制台，-2 表示只保存到日志文件，并不输出到控制台
    */
 
-  log(msg, type, logType) {
+  log (msg, type, logType) {
     const t = this
     const logStr = t.msgFormat(msg, type)
 
@@ -193,7 +193,7 @@ class LogSystem {
    * 只显示输出，不保存到日志文件
    * @param msg {string} -必选 要记录的日志信息
    */
-  showLog(msg) {
+  showLog (msg) {
     const t = this
     t.log(msg, 0, -1)
   }
@@ -202,12 +202,12 @@ class LogSystem {
    * 不输出显示，只保存到日志文件里
    * @param msg {string} -必选 要记录的日志信息
    */
-  hideLog(msg) {
+  hideLog (msg) {
     const t = this
     t.log(msg, 0, -2)
   }
 
-  error(msg) {
+  error (msg) {
     const t = this
     t.log(msg, -1)
   }
@@ -216,7 +216,7 @@ class LogSystem {
    * 只显示输出，不保存到日志文件
    * @param msg {string} -必选 要记录的日志信息
    */
-  showError(msg) {
+  showError (msg) {
     const t = this
     t.log(msg, -1, -1)
   }
@@ -225,7 +225,7 @@ class LogSystem {
    * 不输出显示，只保存到日志文件里
    * @param msg {string} -必选 要记录的日志信息
    */
-  hideError(msg) {
+  hideError (msg) {
     const t = this
     t.log(msg, -1, -2)
   }

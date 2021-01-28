@@ -2,7 +2,7 @@ const timeVersion = require('./bin/utils/timeVersion')
 const path = require('path')
 const os = require('os')
 
-function resolve(dir) {
+function resolve (dir) {
   return path.resolve(__dirname, dir)
 }
 

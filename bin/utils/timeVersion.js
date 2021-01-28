@@ -12,10 +12,10 @@ const dayjs = require('dayjs')
 const JsonFile = require('./jsonFile')
 const rootPath = require('./rootPath')
 const versionLogPath = path.resolve(rootPath, './log/version.log.json')
-const versionLog = new JsonFile(versionLogPath, { spaces: 2 })
+const versionLog = new JsonFile(versionLogPath, { spaces: 2, })
 
 const timeVersion = {
-  getVersionHistory() {
+  getVersionHistory () {
     let versionHistory = versionLog.readNodeSync('versions') || []
 
     /* 如果数据结构被误修改了，则自动修正 */
@@ -26,7 +26,7 @@ const timeVersion = {
     return versionHistory
   },
   /* 获取最后一次版本记录 */
-  getLastVersion(id) {
+  getLastVersion (id) {
     const versionHistory = this.getVersionHistory()
     let lastVersion = versionHistory.pop()
     if (id) {
@@ -41,7 +41,7 @@ const timeVersion = {
    * @param id {String} -可选 为了多处均可获得一个相同的版本号，则须指定版本号对应的id，否则每次调用都将产生不一样的版本号
    * @returns {string}
    */
-  createVersionTag(id) {
+  createVersionTag (id) {
     const versionHistory = this.getVersionHistory()
     let versionTag = dayjs().format('YYYY-MM-DD HH:mm:ss')
     let needSaveToLog = true

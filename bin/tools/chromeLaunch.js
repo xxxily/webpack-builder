@@ -41,7 +41,7 @@ if (launchConfig.userDataDir) {
   fs.ensureDirSync(launchConfig.userDataDir)
 }
 
-async function start() {
+async function start () {
   const runLog = await appLog.read()
 
   /* window下无法正常终结子程序，重新运行程序的时候，尝试把上次运行的进程终结掉，方便调试 */

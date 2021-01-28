@@ -8,14 +8,14 @@
 /**
  * 遍历缓存来查找通过特定模块名缓存下的模块
  */
-function searchCache(moduleName, callback) {
+function searchCache (moduleName, callback) {
   //  通过指定的名字resolve模块
   let mod = require.resolve(moduleName)
 
   // 检查该模块在缓存中是否被resolved并且被发现
   if (mod && (mod = require.cache[mod]) !== undefined) {
     // 递归的检查结果
-    ;(function traverse(mod) {
+    (function traverse (mod) {
       // 检查该模块的子模块并遍历它们
       mod.children.forEach(function (child) {
         traverse(child)
@@ -27,7 +27,7 @@ function searchCache(moduleName, callback) {
   }
 }
 
-function purgeCache(moduleName) {
+function purgeCache (moduleName) {
   // 遍历缓存来找到通过指定模块名载入的文件
   searchCache(moduleName, function (mod) {
     delete require.cache[mod.id]

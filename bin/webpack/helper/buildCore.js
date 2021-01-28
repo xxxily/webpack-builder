@@ -31,10 +31,10 @@ const buildCore = {
    * 创建应用的打包状态信息文件，结合qwGuard.js可实现自动清缓存功能
    * @param filePath
    */
-  createAppStatusFile(filePath) {
+  createAppStatusFile (filePath) {
     filePath = path.resolve(filePath)
 
-    const appStatus = new JsonFile(filePath, { spaces: 2 })
+    const appStatus = new JsonFile(filePath, { spaces: 2, })
     appStatus.writeSync({
       /* 获取打包时候的版本信息 */
       lastVersion: timeVersion.getLastVersion('buildVer'),
@@ -148,7 +148,7 @@ const buildCore = {
             msgLog.hideLog('Output dir: ' + webpackConfig.output.path)
             msgLog.hideLog('----------------------------------------')
 
-            return resolve({ stats, webpackConfig })
+            return resolve({ stats, webpackConfig, })
           })
         })
         .catch((err) => {

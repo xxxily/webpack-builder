@@ -18,11 +18,11 @@ const deepMerge = {
    * @returns {*|void}
    */
   mergeObj: function (objA, objB, concatArr) {
-    function isObj(obj) {
+    function isObj (obj) {
       return Object.prototype.toString.call(obj) === '[object Object]'
     }
     if (!isObj(objA) || !isObj(objB)) return objA
-    function deepMerge(objA, objB) {
+    function deepMerge (objA, objB) {
       const keysB = Object.keys(objB)
       keysB.forEach(function (key) {
         const subItemA = objA[key]

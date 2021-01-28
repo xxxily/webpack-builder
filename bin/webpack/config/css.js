@@ -12,7 +12,7 @@ const CssExtractPlugin = require('mini-css-extract-plugin')
  * @param options.CssExtractPluginPublicPath -可选，默认'../../'，
  * 这是建立在将css提取到static/css目录下得到的，如果目录层级有变，则该规则需要修改，建议使用默认选项
  */
-function cssLoadersGenerator(options) {
+function cssLoadersGenerator (options) {
   options = options || {}
   const esModule = options.esModule || true
   const sourceMap = options.sourceMap || false
@@ -35,10 +35,10 @@ function cssLoadersGenerator(options) {
 
   const postcssLoader = {
     loader: 'postcss-loader',
-    options: { sourceMap },
+    options: { sourceMap, },
   }
 
-  function generateLoaders(loader, loaderOptions) {
+  function generateLoaders (loader, loaderOptions) {
     const loaders = usePostCSS ? [cssLoader, postcssLoader] : [cssLoader]
 
     if (loader) {
@@ -78,7 +78,7 @@ function cssLoadersGenerator(options) {
     less: generateLoaders('less'),
     stylus: generateLoaders('stylus'),
     styl: generateLoaders('stylus'),
-    sass: generateLoaders('sass', { indentedSyntax: true }),
+    sass: generateLoaders('sass', { indentedSyntax: true, }),
     scss: generateLoaders('sass'),
   }
 

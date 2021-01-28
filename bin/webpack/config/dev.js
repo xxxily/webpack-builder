@@ -6,7 +6,7 @@ process.env.NODE_ENV = 'development'
 const helper = require('../helper')
 const projConf = require('./proj')
 const htmlTemplateFactory = require('../helper/htmlTemplateFactory')
-const { merge } = require('webpack-merge')
+const { merge, } = require('webpack-merge')
 const path = require('path')
 const baseWebpackConfig = require('./base')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
@@ -87,7 +87,6 @@ module.exports = new Promise((resolve, reject) => {
       if (templatePages) {
         successMessages.push('The page entry you might want to visit:')
         Object.values(templatePages).forEach(function (pagesPath) {
-          console.log(templatePages, pagesPath, path.basename(pagesPath))
           const pagesName = path.basename(pagesPath)
           const url = `${protocol}://${host}:${port}${devPublicPath}${pagesName}`
           successMessages.push(url)

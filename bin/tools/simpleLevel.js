@@ -8,7 +8,7 @@
  */
 
 class SimpleLevel {
-  constructor(levelMap) {
+  constructor (levelMap) {
     /**
      * 默认的分级数据结构，如果觉得分级数据不合理，可以直接传进去
      */
@@ -57,7 +57,7 @@ class SimpleLevel {
    * 设置分级映射数据
    * @param levelMap {object} -必选 等级映射数据，数据格式参考默认levelMap
    */
-  setLevelMap(levelMap) {
+  setLevelMap (levelMap) {
     if (levelMap) this.levelMap = levelMap
   }
 
@@ -66,7 +66,7 @@ class SimpleLevel {
    * @param score {number} -必选 具体分数
    * @returns {number} 返回等级数字，如果返回-1 当前分数没匹配到任何级别
    */
-  getLevelByScore(score) {
+  getLevelByScore (score) {
     const t = this
     let level = -1
     const levelMap = t.levelMap
@@ -88,7 +88,7 @@ class SimpleLevel {
    * @param alias {string} -必选 别名称谓
    * @returns {number} 返回等级数字，如果返回-1 当前分数没匹配到任何级别
    */
-  getLevelByAlias(alias, levelMap) {
+  getLevelByAlias (alias, levelMap) {
     const t = this
     let level = -1
     levelMap = levelMap || t.levelMap
@@ -110,7 +110,7 @@ class SimpleLevel {
    * @param max
    * @returns {number}
    */
-  random(min, max) {
+  random (min, max) {
     const count = max - min + 1
     return Math.floor(Math.random() * count + min)
   }
@@ -120,7 +120,7 @@ class SimpleLevel {
    * @param levelNumber {number} -必选 等级编号，注意必须是数字，不能是别名
    * @returns {string} 返回评语内容，如果没有对应评语则返回空字符串
    */
-  getCommentByLevelNumber(levelNumber) {
+  getCommentByLevelNumber (levelNumber) {
     const t = this
     const level = levelNumber
     const levelMap = t.levelMap
@@ -140,7 +140,7 @@ class SimpleLevel {
    * @param score {number} -必选 具体分数
    * @returns {string} 返回评语内容，如果没有对应评语则返回空字符串
    */
-  getCommentByScore(score) {
+  getCommentByScore (score) {
     const t = this
     const levelNumber = t.getLevelByScore(score)
     return t.getCommentByLevelNumber(levelNumber)
@@ -151,7 +151,7 @@ class SimpleLevel {
    * @param level {number|string} -必选 等级的编号或别名
    * @returns {string} 返回评语内容，如果没有对应评语则返回空字符串
    */
-  getCommentByLevel(level) {
+  getCommentByLevel (level) {
     const t = this
     const levelNumber = t.getLevelByAlias(level)
     return t.getCommentByLevelNumber(levelNumber)

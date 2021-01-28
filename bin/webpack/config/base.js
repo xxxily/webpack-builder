@@ -8,7 +8,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const cssLoadersGenerator = require('./css')
 const htmlTemplateFactory = require('../helper/htmlTemplateFactory')
 const utils = require('../../utils/utils')
-const { VueLoaderPlugin } = require('vue-loader')
+const { VueLoaderPlugin, } = require('vue-loader')
 
 const entrys = require('../helper/entrys').smartEntrys(projConf.appEntrys || false)
 

@@ -10,7 +10,7 @@ const webpack = require('webpack')
 const WebpackDevServer = require('webpack-dev-server')
 const devConf = require('./config/dev')
 
-async function start() {
+async function start () {
   const devWebpackConfig = await devConf
   const devServerOptions = devWebpackConfig.devServer
   const host = devServerOptions.host || '0.0.0.0'

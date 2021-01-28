@@ -1,6 +1,9 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="./images/logo.png" />
+    <img
+      alt="Vue logo"
+      src="./images/logo.png"
+    >
     <HelloWorld msg="Hello world" />
   </div>
 </template>
@@ -13,7 +16,7 @@ export default {
   components: {
     HelloWorld,
   },
-  setup(): void {
+  setup (): void {
     console.log(process.env.NODE_ENV)
   },
 }

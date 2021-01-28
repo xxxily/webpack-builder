@@ -15,12 +15,20 @@ module.exports = {
     'standard',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
-    // 'plugin:vue/recommended',
-    'plugin:prettier/recommended',
-    'prettier/vue',
-    'prettier/@typescript-eslint',
+    'plugin:vue/recommended',
+    // 'plugin:prettier/recommended',
+    // 'prettier/vue',
+    // 'prettier/@typescript-eslint',
   ],
-  rules: {},
+  rules: {
+    'comma-dangle': ['error', {
+      arrays: 'always-multiline',
+      objects: 'always',
+      imports: 'never',
+      exports: 'never',
+      functions: 'never',
+    }],
+  },
   overrides: [
     // 覆盖vue相关规则
     {

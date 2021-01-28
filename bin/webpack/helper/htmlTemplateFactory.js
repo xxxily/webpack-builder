@@ -21,7 +21,7 @@ const htmlTemplateFactory = {
    * 获取模板文件
    * @returns {*|string}
    */
-  getTemplatePages(entrys) {
+  getTemplatePages (entrys) {
     const t = this
     if (t.templatePages) {
       return t.templatePages
@@ -42,7 +42,7 @@ const htmlTemplateFactory = {
    * 注意，注入完后一定要把$template重新返回，才能确保被正确读取
    * @returns {*} 返回 $template
    */
-  setInjectContent($template) {
+  setInjectContent ($template) {
     /*
     // 这是重写示例
     let injectContent = `
@@ -59,7 +59,7 @@ const htmlTemplateFactory = {
    * 获取HTML模板内容，并注入公共代码
    * @param templatePagesUrl
    */
-  getTemplateContent(templatePagesPath, arg) {
+  getTemplateContent (templatePagesPath, arg) {
     const t = this
     const filePath = path.resolve(rootPath, templatePagesPath)
     let htmlTemplate = ''
@@ -90,7 +90,7 @@ const htmlTemplateFactory = {
    * @param entry {object} -必选，webpack的入口配置，因为需要进行对比
    * @returns {Array}
    */
-  extractHtmlWebpackPluginConf(entrys) {
+  extractHtmlWebpackPluginConf (entrys) {
     const t = this
     const templatePages = t.getTemplatePages(entrys)
     const htmlWebpackPluginConf = []
@@ -128,7 +128,7 @@ const htmlTemplateFactory = {
 
     return htmlWebpackPluginConf
   },
-  createHtmlWebpackPlugins(entrys) {
+  createHtmlWebpackPlugins (entrys) {
     const htmlWebpackPluginArr = []
     const htmlWebpackPluginConf = htmlTemplateFactory.extractHtmlWebpackPluginConf(entrys)
     htmlWebpackPluginConf.forEach(function (conf) {

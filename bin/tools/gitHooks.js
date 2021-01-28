@@ -419,7 +419,7 @@ const gitHooks = {
 
     for (let i = 0; i < packagePaths.length; i++) {
       const packagePath = packagePaths[i]
-      utils.cmds(['yarn'], { cwd: packagePath })
+      utils.cmds(['yarn'], { cwd: packagePath, })
     }
   },
 

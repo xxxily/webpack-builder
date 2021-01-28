@@ -13,10 +13,10 @@ const fs = require('fs-extra')
 const projRootPath = require('../../utils/rootPath')
 const utils = require('../../utils/utils')
 
-function isObj(obj) {
+function isObj (obj) {
   return Object.prototype.toString.call(obj) === '[object Object]'
 }
-function isReg(reg) {
+function isReg (reg) {
   return Object.prototype.toString.call(reg) === '[object RegExp]'
 }
 
@@ -28,7 +28,7 @@ const entrys = {
    * @param filter {String|RegExp|Function|Array} -必选 过滤规则，支持字符串、正则、函数
    * @returns {{}|*|{}}
    */
-  getEntrysByFilter(entryResult, filter) {
+  getEntrysByFilter (entryResult, filter) {
     if (!isObj(entryResult) || !filter || filter === true) {
       return entryResult || {}
     }
@@ -73,7 +73,7 @@ const entrys = {
    * @param rootPath {string} -选填 指定glob运行的根目录和查找入口文件基础路径的根目录
    * @returns {*} 返回入口地址列表
    */
-  getEntrys(filter, basePath, rootPath) {
+  getEntrys (filter, basePath, rootPath) {
     rootPath = rootPath || projRootPath
 
     /* 默认支持的入口文件目录路径 */
@@ -148,7 +148,7 @@ const entrys = {
    * eg. npm run dev -e index docs 表示开发时只运行index、docs两个应用
    * 当npm命令参数指定entry参数时其优先级高于配置选项的entry
    */
-  smartEntrys(filter, basePath, rootPath) {
+  smartEntrys (filter, basePath, rootPath) {
     const allOpt = ['all', 'allEntry', 'allentry', 'allEntrys', 'allentrys']
     const entryOpt = ['e', 'entry', 'entrys']
     const allConf = utils.getNpmArgItemByFilter(allOpt)

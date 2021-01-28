@@ -10,7 +10,7 @@ const path = require('path')
  * @param filePath
  * @returns {{}}
  */
-function loadConf(filePath) {
+function loadConf (filePath) {
   let result = {}
 
   if (fs.existsSync(filePath)) {

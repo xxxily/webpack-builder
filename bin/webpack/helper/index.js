@@ -8,7 +8,7 @@ const notifier = require('node-notifier')
  * 判断是否为开发环境
  * @returns {boolean}
  */
-function isDev() {
+function isDev () {
   return process.env.NODE_ENV === 'development'
 }
 
@@ -16,7 +16,7 @@ function isDev() {
  * 判断是否为production环境
  * @returns {boolean}
  */
-function isProd() {
+function isProd () {
   return process.env.NODE_ENV === 'production'
 }
 
@@ -24,7 +24,7 @@ function isProd() {
  * 判断是否为测试环境
  * @returns {boolean}
  */
-function isTest() {
+function isTest () {
   return process.env.NODE_ENV === 'test'
 }
 
@@ -38,7 +38,7 @@ const helper = {
    * @param _path
    * @returns {string}
    */
-  assetsDir(_path) {
+  assetsDir (_path) {
     const assetsDir = isProd() ? config.prod.assetsDir : config.dev.assetsDir
     return path.posix.join(assetsDir, _path)
   },
@@ -48,11 +48,11 @@ const helper = {
    * @param _path
    * @returns {*|Promise<void>|Promise<any>}
    */
-  resolve(_path) {
+  resolve (_path) {
     return path.resolve(rootPath, _path)
   },
 
-  notify(msg, title, subtitle) {
+  notify (msg, title, subtitle) {
     notifier.notify({
       title: title || pkg.name,
       message: msg || 'no message',
@@ -64,7 +64,7 @@ const helper = {
   /**
    * 获取外部干预打包入口选项的过滤码
    */
-  getFilterCode() {
+  getFilterCode () {
     const t = helper
 
     if (t._filterCode_) {

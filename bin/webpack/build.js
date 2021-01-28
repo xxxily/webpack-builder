@@ -9,7 +9,7 @@ const utils = require('../utils/utils')
 const tmpDirOpt = ['tmp', 'tmpdir', 'tmpDir']
 const useTmpDir = Boolean(utils.getNpmArgItemByFilter(tmpDirOpt))
 
-async function init() {
+async function init () {
   await buildCore
     .build(prodWebpackConfig, useTmpDir, projConf.webpackStatsOpt)
     .catch((err) => {
@@ -19,7 +19,7 @@ async function init() {
         console.error(err)
       }
     })
-    .then(({ stats, webpackConfig }) => {
+    .then(({ stats, webpackConfig, }) => {
       console.log('Assets output directory : ' + webpackConfig.output.path + '\n')
     })
 }

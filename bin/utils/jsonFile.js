@@ -16,7 +16,7 @@ class JsonFile {
    * @param filePath
    * @param options
    */
-  constructor(filePath, options) {
+  constructor (filePath, options) {
     this.setFilePath(filePath)
     this.setOptions(options)
   }
@@ -26,13 +26,13 @@ class JsonFile {
    * https://github.com/jprichardson/node-fs-extra/blob/master/docs/writeJson.md
    * @param options
    */
-  setOptions(options) {
+  setOptions (options) {
     const defOpt = this.getOptions()
     options = Object.assign(defOpt, options || {})
     this.options = options
   }
 
-  getOptions() {
+  getOptions () {
     return (
       this.options || {
         spaces: 2,
@@ -40,11 +40,11 @@ class JsonFile {
     )
   }
 
-  setFilePath(filePath) {
+  setFilePath (filePath) {
     this.jsonFilePath = filePath || this.jsonFilePath || ''
   }
 
-  getFilePath() {
+  getFilePath () {
     return this.jsonFilePath
   }
 
@@ -53,7 +53,7 @@ class JsonFile {
    * @param filePath {path} -可选，指定文件路径，如果不指定则使用初始化或setFilePath时的路径
    * @returns {Promise<any>}
    */
-  read(filePath) {
+  read (filePath) {
     const t = this
     const jsonPath = filePath || t.getFilePath()
     return new Promise(async function (resolve, reject) {
@@ -68,14 +68,14 @@ class JsonFile {
     })
   }
 
-  readSync(filePath) {
+  readSync (filePath) {
     const t = this
     const jsonPath = filePath || t.getFilePath()
     const jsonPathExists = fs.existsSync(jsonPath)
     let json = {}
 
     if (jsonPathExists) {
-      json = fs.readJsonSync(jsonPath, { throws: false })
+      json = fs.readJsonSync(jsonPath, { throws: false, })
     }
 
     return json || {}
@@ -88,7 +88,7 @@ class JsonFile {
    * @param filePath {path} -可选，同read方法的filePath
    * @returns {Promise<any>}
    */
-  write(json, options, filePath) {
+  write (json, options, filePath) {
     const t = this
     const jsonPath = filePath || t.getFilePath()
     return new Promise(async function (resolve, reject) {
@@ -106,7 +106,7 @@ class JsonFile {
     })
   }
 
-  writeSync(json, options, filePath) {
+  writeSync (json, options, filePath) {
     const t = this
     const jsonPath = filePath || t.getFilePath()
     const jsonPathExists = fs.existsSync(jsonPath)
@@ -125,13 +125,13 @@ class JsonFile {
    * @param filePath {path} -可选，指定文件路径
    * @returns {Promise<any>}
    */
-  isExists(filePath) {
+  isExists (filePath) {
     const t = this
     const jsonPath = filePath || t.getFilePath()
     return fs.pathExists(jsonPath)
   }
 
-  isObj(obj) {
+  isObj (obj) {
     return Object.prototype.toString.call(obj) === '[object Object]'
   }
 
@@ -141,7 +141,7 @@ class JsonFile {
    * @param path {string} -必选 获取里面的对象里面数据的路径字符串，如'a.b'
    * @returns {*}
    */
-  getData(json, path) {
+  getData (json, path) {
     if (!path) {
       return json
     }
@@ -170,7 +170,7 @@ class JsonFile {
    * @param data {*} -必选 要写入的数据
    * @returns {*}
    */
-  setData(json, path, data) {
+  setData (json, path, data) {
     const t = this
 
     if (!path || !t.isObj(json)) {
@@ -203,7 +203,7 @@ class JsonFile {
    * @param chainPath {string} -必选 节点路径，例如 'data.count' 则最终写到json数据的data.coutn下
    * @param filePath {path} -可选，同read方法的filePath
    */
-  writeToNode(nodePath, data, filePath) {
+  writeToNode (nodePath, data, filePath) {
     if (!nodePath) {
       console.error('写入失败，必须提供节点路径')
       return false
@@ -218,7 +218,7 @@ class JsonFile {
     })
   }
 
-  writeToNodeSync(nodePath, data, filePath) {
+  writeToNodeSync (nodePath, data, filePath) {
     if (!nodePath) {
       console.error('写入失败，必须提供节点路径')
       return false
@@ -236,7 +236,7 @@ class JsonFile {
    * @param chainPath {string} -必选 节点路径，例如 'data.count' 则最终写到json数据的data.coutn下
    * @param filePath {path} -可选，同read方法的filePath
    */
-  readNode(nodePath, filePath) {
+  readNode (nodePath, filePath) {
     if (!nodePath) {
       console.error('读取失败，必须提供节点路径')
       return false
@@ -251,7 +251,7 @@ class JsonFile {
     })
   }
 
-  readNodeSync(nodePath, filePath) {
+  readNodeSync (nodePath, filePath) {
     if (!nodePath) {
       console.error('读取失败，必须提供节点路径')
       return false
