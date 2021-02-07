@@ -11,7 +11,7 @@ const WebpackDevServer = require('webpack-dev-server')
 const devConf = require('./config/dev')
 
 async function start () {
-  const devWebpackConfig = await devConf
+  const devWebpackConfig = await devConf()
   const devServerOptions = devWebpackConfig.devServer
   const host = devServerOptions.host || '0.0.0.0'
   const port = devServerOptions.port || 8088

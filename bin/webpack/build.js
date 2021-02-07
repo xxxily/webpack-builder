@@ -11,7 +11,7 @@ const useTmpDir = Boolean(utils.getNpmArgItemByFilter(tmpDirOpt))
 
 async function init () {
   await buildCore
-    .build(prodWebpackConfig, useTmpDir, projConf.webpackStatsOpt)
+    .build(await prodWebpackConfig(), useTmpDir, projConf.webpackStatsOpt)
     .catch((err) => {
       if (err.toString) {
         console.error(err.toString())

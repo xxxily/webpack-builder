@@ -10,8 +10,11 @@
 const path = require('path')
 const glob = require('glob')
 const fs = require('fs-extra')
+const inquirer = require('inquirer')
 const projRootPath = require('../../utils/rootPath')
 const utils = require('../../utils/utils')
+const rootPath = require('../../utils/rootPath')
+const JsonFile = require('../../utils/jsonFile')
 
 function isObj (obj) {
   return Object.prototype.toString.call(obj) === '[object Object]'
@@ -143,24 +146,81 @@ const entrys = {
   },
 
   /**
+   * 询问用户使用哪些应用入口
+   * 在应用非常多的情况下，要用户手敲应用入口比较费劲，可视化选择相对比较友好
+   * @param remember
+   * @returns {Promise<any>}
+   */
+  async inquireEntrys (remember = true) {
+    const mode = process.env.NODE_ENV || 'development'
+    const log = remember
+      ? new JsonFile(path.resolve(rootPath, './log/inquireEntrys.json'))
+      : null
+
+    let defaultChoices = []
+    if (remember) {
+      defaultChoices = await log.readNode(mode) || []
+    }
+
+    const allEntry = entrys.getEntrys()
+    const answers = await inquirer.prompt([{
+      type: 'checkbox',
+      name: 'entrys',
+      message: '请选择应用入口：',
+      default: defaultChoices,
+      choices: [
+        ...Object.keys(allEntry),
+      ],
+      validate (input) {
+        if (input.length) {
+          return true
+        }
+      },
+    }])
+
+    if (remember) {
+      await log.writeToNode(mode, answers.entrys)
+    }
+
+    return answers.entrys
+  },
+
+  /**
    * 自动判断当前需要使用的入口，主要该函数有较大的副作用
    * 会受到proj.config、npm命令参数等地方的影响
    * eg. npm run dev -e index docs 表示开发时只运行index、docs两个应用
    * 当npm命令参数指定entry参数时其优先级高于配置选项的entry
+   * @param opts 定制相关选项
+   * @param opts.filter getEntrys的filter选项，默认false，使用所有应用
+   * @param opts.basePath getEntrys的basePath选项
+   * @param opts.rootPath getEntrys的rootPath选项
+   * @param opts.inquirer 询问用户希望使用哪些入口，如果运行参数包括了-all -e等参数，则不再询问
+   * @param opts.remember 记住用户的选择结果，下次默认选上
+   * @returns {Promise<*>}
    */
-  smartEntrys (filter, basePath, rootPath) {
+  async smartEntrys (opts = {
+    filter: false,
+    basePath: null,
+    rootPath: null,
+    inquirer: false,
+    remember: true,
+  }) {
     const allOpt = ['all', 'allEntry', 'allentry', 'allEntrys', 'allentrys']
     const entryOpt = ['e', 'entry', 'entrys']
+    const inquireOpt = ['i', 'inquire']
     const allConf = utils.getNpmArgItemByFilter(allOpt)
     const entryConf = utils.getNpmArgItemByFilter(entryOpt)
+    const inquireConf = utils.getNpmArgItemByFilter(inquireOpt)
 
     if (allConf) {
-      filter = true
-    } else {
-      filter = entryConf || filter
+      opts.filter = true
+    } else if (entryConf) {
+      opts.filter = entryConf
+    } else if (opts.inquirer || inquireConf) {
+      opts.filter = await entrys.inquireEntrys(opts.remember)
     }
 
-    return entrys.getEntrys(filter, basePath, rootPath)
+    return entrys.getEntrys(opts.filter, opts.basePath, opts.rootPath)
   },
 }
 

@@ -57,52 +57,52 @@ const devDefaultConfig = {
   plugins: [],
 }
 
-/* 跟基础配置信息进行合并，组合出开发环境的配置信息 */
-const devWebpackConfig = merge(baseWebpackConfig, devDefaultConfig, projConf.webpackConfig)
+module.exports = async function () {
+  /* 跟基础配置信息进行合并，组合出开发环境的配置信息 */
+  const devWebpackConfig = merge(await baseWebpackConfig(), devDefaultConfig, projConf.webpackConfig)
 
-// console.log(devWebpackConfig)
+  return new Promise((resolve, reject) => {
+    portfinder.basePort = process.env.PORT || devWebpackConfig.devServer.port
+    portfinder.getPort((err, port) => {
+      if (err) {
+        reject(err)
+      } else {
+        process.env.PORT = port
+        devWebpackConfig.devServer.port = port
 
-module.exports = new Promise((resolve, reject) => {
-  portfinder.basePort = process.env.PORT || devWebpackConfig.devServer.port
-  portfinder.getPort((err, port) => {
-    if (err) {
-      reject(err)
-    } else {
-      process.env.PORT = port
-      devWebpackConfig.devServer.port = port
+        const devServer = devWebpackConfig.devServer
+        const protocol = devServer.https ? 'https' : 'http'
 
-      const devServer = devWebpackConfig.devServer
-      const protocol = devServer.https ? 'https' : 'http'
+        let host = devServer.host
+        if (host === '0.0.0.0') {
+          host = 'localhost'
+        }
 
-      let host = devServer.host
-      if (host === '0.0.0.0') {
-        host = 'localhost'
+        const successMessages = [`Your application is running here: ${protocol}://${host}:${port}`]
+        const devPublicPath = devServer.dev.publicPath
+
+        /* 增加可用的访问入口提示 */
+        const templatePages = htmlTemplateFactory.getTemplatePages(devWebpackConfig.entry)
+        if (templatePages) {
+          successMessages.push('The page entry you might want to visit:')
+          Object.values(templatePages).forEach(function (pagesPath) {
+            const pagesName = path.basename(pagesPath)
+            const url = `${protocol}://${host}:${port}${devPublicPath}${pagesName}`
+            successMessages.push(url)
+          })
+        }
+
+        devWebpackConfig.plugins.push(
+          new FriendlyErrorsPlugin({
+            compilationSuccessInfo: {
+              messages: successMessages,
+            },
+            onErrors: projConf.notifyOnErrors ? helper.createNotifierCallback() : undefined,
+          })
+        )
+
+        resolve(devWebpackConfig)
       }
-
-      const successMessages = [`Your application is running here: ${protocol}://${host}:${port}`]
-      const devPublicPath = devServer.dev.publicPath
-
-      /* 增加可用的访问入口提示 */
-      const templatePages = htmlTemplateFactory.getTemplatePages(devWebpackConfig.entry)
-      if (templatePages) {
-        successMessages.push('The page entry you might want to visit:')
-        Object.values(templatePages).forEach(function (pagesPath) {
-          const pagesName = path.basename(pagesPath)
-          const url = `${protocol}://${host}:${port}${devPublicPath}${pagesName}`
-          successMessages.push(url)
-        })
-      }
-
-      devWebpackConfig.plugins.push(
-        new FriendlyErrorsPlugin({
-          compilationSuccessInfo: {
-            messages: successMessages,
-          },
-          onErrors: projConf.notifyOnErrors ? helper.createNotifierCallback() : undefined,
-        })
-      )
-
-      resolve(devWebpackConfig)
-    }
+    })
   })
-})
+}

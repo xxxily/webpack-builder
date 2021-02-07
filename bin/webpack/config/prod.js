@@ -52,6 +52,7 @@ const prodDefaultConfig = {
   plugins: [],
 }
 
-const prodWebpackConfig = merge(baseWebpackConfig, prodDefaultConfig, projConf.webpackConfig)
-
-module.exports = prodWebpackConfig
+module.exports = async function () {
+  const prodWebpackConfig = merge(await baseWebpackConfig(), prodDefaultConfig, projConf.webpackConfig)
+  return prodWebpackConfig
+}

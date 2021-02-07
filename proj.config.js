@@ -61,6 +61,9 @@ const projectConfig = {
      */
     appEntrys: ['demo'],
 
+    /* 当应用个数达到N个的时候，主动询问用户要启动哪些应用 */
+    entrysInquirer: 3,
+
     minifyHtmlTemplate: false,
 
     /**
